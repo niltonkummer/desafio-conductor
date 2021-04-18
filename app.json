@@ -1,12 +1,11 @@
 {
-  "name": "Start on Heroku: Go",
-  "description": "Go Getting Started Example App",
+  "name": "Desafio Conductor DataHub",
+  "description": "Desafio Conductor DataHub",
   "keywords": [
-    "getting-started",
+    "main",
     "go",
-    "sample",
-    "example"
+    "desafio",
   ],
-  "website": "http://github.com/heroku/go-getting-started",
-  "repository": "http://github.com/heroku/go-getting-started"
+  "website": "http://github.com/niltonkummer/desafio-conductor",
+  "repository": "http://github.com/niltonkummer/desafio-conductor"
 }
