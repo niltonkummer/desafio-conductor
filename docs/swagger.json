@@ -1,0 +1,177 @@
+{
+    "schemes": [
+        "https",
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "title": "Desafio Conductor",
+        "contact": {}
+    },
+    "host": "warm-bastion-37111.herokuapp.com",
+    "basePath": "/conductor/v1/api",
+    "paths": {
+        "/contas": {
+            "get": {
+                "description": "Retorna uma lista de contas",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Lista Contas",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Account"
+                            }
+                        },
+                        "headers": {
+                            "Bearer": {
+                                "type": "string",
+                                "description": "qwerty"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/contas/{id}": {
+            "get": {
+                "description": "Retorna uma conta por id",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Busca Conta por ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID Conta",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Account"
+                        },
+                        "headers": {
+                            "Bearer": {
+                                "type": "string",
+                                "description": "qwerty"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/contas/{id}/transacoes": {
+            "get": {
+                "description": "Retorna uma lista de transações de uma determinada conta",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Busca as transações de uma conta",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID Conta",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Transaction"
+                            }
+                        },
+                        "headers": {
+                            "Bearer": {
+                                "type": "string",
+                                "description": "qwerty"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/contas/{id}/transacoes.pdf": {
+            "get": {
+                "description": "Retorna as transações de uma conta em formato PDF",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Gera a fatura em PDF",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID Conta",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "headers": {
+                            "Bearer": {
+                                "type": "string",
+                                "description": "qwerty"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.Account": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Transaction": {
+            "type": "object",
+            "properties": {
+                "conta": {
+                    "$ref": "#/definitions/model.Account"
+                },
+                "conta-id": {
+                    "type": "string"
+                },
+                "descricao": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "valor": {
+                    "type": "number"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

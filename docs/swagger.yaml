@@ -1,0 +1,116 @@
+basePath: /conductor/v1/api
+definitions:
+  model.Account:
+    properties:
+      id:
+        type: string
+      status:
+        type: string
+    type: object
+  model.Transaction:
+    properties:
+      conta:
+        $ref: '#/definitions/model.Account'
+      conta-id:
+        type: string
+      descricao:
+        type: string
+      id:
+        type: string
+      valor:
+        type: number
+    type: object
+host: warm-bastion-37111.herokuapp.com
+info:
+  contact: {}
+  title: Desafio Conductor
+paths:
+  /contas:
+    get:
+      description: Retorna uma lista de contas
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Bearer:
+              description: qwerty
+              type: string
+          schema:
+            items:
+              $ref: '#/definitions/model.Account'
+            type: array
+      summary: Lista Contas
+  /contas/{id}:
+    get:
+      description: Retorna uma conta por id
+      parameters:
+      - description: ID Conta
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Bearer:
+              description: qwerty
+              type: string
+          schema:
+            $ref: '#/definitions/model.Account'
+      summary: Busca Conta por ID
+  /contas/{id}/transacoes:
+    get:
+      description: Retorna uma lista de transações de uma determinada conta
+      parameters:
+      - description: ID Conta
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Bearer:
+              description: qwerty
+              type: string
+          schema:
+            items:
+              $ref: '#/definitions/model.Transaction'
+            type: array
+      summary: Busca as transações de uma conta
+  /contas/{id}/transacoes.pdf:
+    get:
+      description: Retorna as transações de uma conta em formato PDF
+      parameters:
+      - description: ID Conta
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+          headers:
+            Bearer:
+              description: qwerty
+              type: string
+      summary: Gera a fatura em PDF
+schemes:
+- https
+- http
+securityDefinitions:
+  Bearer:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

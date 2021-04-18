@@ -1,48 +1,33 @@
 
-# go-getting-started
-
-A barebones Go app, which can easily be deployed to Heroku.
-
-This application supports the [Getting Started with Go on Heroku](https://devcenter.heroku.com/articles/getting-started-with-go) article - check it out.
+# Desafio Conductor
 
 ## Running Locally
 
-Make sure you have [Go](http://golang.org/doc/install) version 1.12 or newer and the [Heroku Toolbelt](https://toolbelt.heroku.com/) installed.
-
+#### Compilando e rodando local com go:
 ```sh
-$ git clone https://github.com/heroku/go-getting-started.git
-$ cd go-getting-started
-$ go build -o bin/go-getting-started -v . # or `go build -o bin/go-getting-started.exe -v .` in git bash
-github.com/mattn/go-colorable
-gopkg.in/bluesuncorp/validator.v5
-golang.org/x/net/context
-github.com/heroku/x/hmetrics
-github.com/gin-gonic/gin/render
-github.com/manucorporat/sse
-github.com/heroku/x/hmetrics/onload
-github.com/gin-gonic/gin/binding
-github.com/gin-gonic/gin
-github.com/heroku/go-getting-started
-$ heroku local
+$ git clone https://github.com/niltonkummer/desafio-conductor.git
+$ cd desafio-conductor
+$ go build -o bin/desafio-conductor -v . 
+$ make run
 ```
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+A aplicação irá rodar no endereço [localhost:5000](http://localhost:5000/).
 
-## Deploying to Heroku
-
+##### Rodando com docker
 ```sh
-$ heroku create
-$ git push heroku main
-$ heroku open
+$ docker-compose up --build
 ```
 
-or
+## Exemplo
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+`GET /contas/{id}/transacoes.pdf`
 
+```sh
+$ curl -sv --location --request GET 'https://warm-bastion-37111.herokuapp.com/conductor/v1/api/contas/c13d1ec5-3215-472c-b856-ed4a83ee5c4d/transacoes.pdf' \
+--header 'Authorization:Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE2MTg4MDgzNzcsImV4cCI6MTY1MDM0NDM3NywiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.hf6ChYTnOw4dKuK51SZQA20k0J1eFOBLRcC-wD6Xhk4' \
+-o fatura.pdf && open fatura.pdf
+```
 
-## Documentation
+## Documentação API
 
-For more information about using Go on Heroku, see these Dev Center articles:
-
-- [Go on Heroku](https://devcenter.heroku.com/categories/go)
+- [Swagger](https://warm-bastion-37111.herokuapp.com/swagger/)

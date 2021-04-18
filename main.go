@@ -1,44 +1,42 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"net/http"
 	"os"
-	"time"
 
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
+	"github.com/niltonkummer/desafio-conductor/app/config"
+
+	"gorm.io/driver/sqlite"
+
 	_ "github.com/heroku/x/hmetrics/onload"
+	"github.com/niltonkummer/desafio-conductor/app"
 )
 
-func main() {
-	port := os.Getenv("PORT")
+// @securityDefinitions.apikey Bearer
+// @in header
+// @name Authorization
 
+// @info
+// @version: 0.1.0
+// @title Desafio Conductor
+
+// @host warm-bastion-37111.herokuapp.com
+// @schemes https http
+// @BasePath /conductor/v1/api
+func main() {
+
+	port := os.Getenv("PORT")
 	if port == "" {
 		log.Fatal("$PORT must be set")
 	}
 
-	router := chi.NewRouter()
-	router.Use(middleware.Logger)
-
-	router.Get("/", func(writer http.ResponseWriter, request *http.Request) {
-		writer.WriteHeader(http.StatusOK)
-		fmt.Fprintf(writer, "Bem-vindo %s", request.URL.Query().Get("name"))
-	})
-
-	srv := &http.Server{
-		Addr:              ":" + port,
-		Handler:           router,
-		ReadTimeout:       time.Second * 10,
-		ReadHeaderTimeout: time.Second * 10,
-		WriteTimeout:      time.Second * 10,
-		IdleTimeout:       time.Second * 10,
-		ErrorLog:          log.New(os.Stderr, "", log.LstdFlags),
+	dbDialect := os.Getenv("DB")
+	if dbDialect == "" {
+		log.Fatal("$DB must be set")
 	}
 
-	err := srv.ListenAndServe()
-	if err != nil {
-		log.Fatal(err)
-	}
+	app.NewApplication(&config.Config{
+		HttpListen: ":" + port,
+		DBDialect:  sqlite.Open(dbDialect),
+	}).StartServer()
 }
